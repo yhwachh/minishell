@@ -1,6 +1,6 @@
 #include "../../header/minishell.h"
 
-static	int	where_is(char **tmp)
+static	int	ft_find(char **tmp)
 {
 	int	i;
 
@@ -14,7 +14,7 @@ static	int	where_is(char **tmp)
 	return (0);
 }
 
-static	void	cat_left(char **tmp)
+static	void	ft_malloc_cat(char **tmp)
 {
 	char	**tab;
 	int		nb;
@@ -28,7 +28,7 @@ static	void	cat_left(char **tmp)
 	free(tab);
 }
 
-static	void	last_left(char **tmp, int nb)
+static	void	ft_malloc_error(char **tmp, int nb)
 {
 	char	**tab;
 	int		i;
@@ -48,16 +48,16 @@ static	void	last_left(char **tmp, int nb)
 	free(tab);
 }
 
-void	ft_redirection_2(char **tmp, char **env, char *str)
+void	ft_redirect_two(char **tmp, char **env, char *str)
 {
 	int	nb;
 
 	(void)str;
 	(void)env;
-	nb = where_is(tmp);
-	if ((ft_strncmp(tmp[1], "<", 10) == 0)
-		&& (ft_strncmp(tmp[0], "cat", 10) == 0))
-		cat_left(tmp);
-	else if (ft_strncmp(tmp[nb], "<", 10) == 0)
-		last_left(tmp, nb);
+	nb = ft_find(tmp);
+	if ((ft_strncmp(tmp[1], "<", MAX_SIZE + 4) == 0)
+		&& (ft_strncmp(tmp[0], "cat", MAX_SIZE + 4) == 0))
+		ft_malloc_cat(tmp);
+	else if (ft_strncmp(tmp[nb], "<", MAX_SIZE + 4) == 0)
+		ft_malloc_error(tmp, nb);
 }

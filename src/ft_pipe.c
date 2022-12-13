@@ -15,7 +15,7 @@ void	ft_exec_pipe(char *str, char **env, char *tps)
 	tp = parsing(str);
 	if (ft_count(tp) == 1)
 	{
-		ft_redirection(tp, env, tps);
+		ft_redirect(tp, env, tps);
 		return ;
 	}
 	str = ft_strjoin("/bin/", tp[0]);

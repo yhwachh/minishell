@@ -3,15 +3,12 @@
 int	tokenize(char **env, char *line, char **tp)
 {
 	if (ft_count(tp) == 1)
-		ft_redirection(tp, env, line);
+		ft_redirect(tp, env, line);
 	else if ((ft_strncmp(tp[0], "echo", MAX_SIZE) == 0)
 		&& ft_strncmp(tp[1], "$?", MAX_SIZE) == 0)
 		echo_erreur(g_pid, 0);
 	else if (ft_strncmp(tp[0], "echo", MAX_SIZE) == 0)
-	{
 		ft_echo(tp, env, line);
-		//g_pid = 0;
-	}
 	else if (ft_strncmp(tp[0], "cd", MAX_SIZE) == 0)
 		cd(tp);
 	else if (ft_strncmp(tp[0], "pwd", MAX_SIZE) == 0)

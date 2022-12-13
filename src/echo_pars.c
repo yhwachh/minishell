@@ -86,10 +86,7 @@ void	ft_echo(char **str, char **find, char *line)
 	int	qt;
 
 	if (ft_strncmp(str[1], "-n", MAX_SIZE) == 0 && !str[2])
-	{
-		g_pid = 127;
 		return ;
-	}
 	qt = 1;
 	i = ft_check_n(str);
 	while (str[++i])
@@ -98,9 +95,9 @@ void	ft_echo(char **str, char **find, char *line)
 		qt = 1;
 		if (str[i][0] == DOLLAR && quoate_type(line, qt))
 			id = rt_echo(str, i, find, line);
-		if (id == 0 && str[i][0] != ONE_QUOTES && ft_check_str(line) == 0 && str[1][0] != '-')
+		if (id == 0 && str[i][0] != ONE_QUOTES && ft_check_str(line) == 0 && str[1][0] != NEGAT)
 			printf("%s ", str[i]);
-		if (id == 0 && str[i][0] != ONE_QUOTES && ft_check_str(line) == 0 && str[1][0] == '-')
+		if (id == 0 && str[i][0] != ONE_QUOTES && ft_check_str(line) == 0 && str[1][0] == NEGAT)
 			printf("%s", str[i]);
 		else if (id == 0 && str[i][0] != ONE_QUOTES && ft_check_str(line) == 1)
 			printf("%s", str[i]);

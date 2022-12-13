@@ -1,6 +1,6 @@
 #include "../../header/minishell.h"
 
-static	int	ft_redirection_utils(char **tmp, int fd)
+static	int	redirect_util(char **tmp, int fd)
 {
 	if ((ft_strncmp(tmp[1], ">>", 10) == 0) && tmp[2]
 		&& access(tmp[2], F_OK) == -1)
@@ -17,13 +17,13 @@ static	int	ft_redirection_utils(char **tmp, int fd)
 	return (fd);
 }
 
-void	static	ft_redirection_echo(char **tmp, char **env, char *str)
+void	static	ft_redirect_echo_3(char **tmp, char **env, char *str)
 {
 	pid_t	pid;
 	int		ret;
 
 	ret = 0;
-	ret = ft_redirection_utils(tmp, ret);
+	ret = redirect_util(tmp, ret);
 	pid = fork();
 	if (pid == 0)
 	{
@@ -41,14 +41,14 @@ void	static	ft_redirection_echo(char **tmp, char **env, char *str)
 	close(ret);
 }
 
-void	static	ft_redirection_exec(char **tmp, char **env, char *str)
+void	static	ft_redirect_exec(char **tmp, char **env, char *str)
 {
 	pid_t	pid;
 	int		ret;
 
 	ret = 0;
-	ret = ft_redirection_utils(tmp, ret);
-	str = bultin_1(str);
+	ret = redirect_util(tmp, ret);
+	str = malloc_and_chr(str);
 	pid = fork();
 	if (pid == 0)
 	{
@@ -63,7 +63,7 @@ void	static	ft_redirection_exec(char **tmp, char **env, char *str)
 	free(str);
 }
 
-void	static	ft_redirection_echo_1(char **tmp)
+void	static	redirect_echo_one(char **tmp)
 {
 	pid_t	pid;
 	int		ret;
@@ -83,15 +83,15 @@ void	static	ft_redirection_echo_1(char **tmp)
 	close(ret);
 }
 
-void	ft_redirection_3(char **tmp, char **env, char *str)
+void	ft_redirect_tree(char **tmp, char **env, char *str)
 {
 	if ((ft_strncmp(tmp[0], ">>", 10) == 0) && tmp[1])
-		ft_redirection_echo_1(tmp);
+		redirect_echo_one(tmp);
 	else if ((ft_strncmp(tmp[1], ">>", 10) == 0) && tmp[2]
 		&& ft_strncmp(tmp[0], "echo", 10) == 0)
-		ft_redirection_echo(tmp, env, str);
+		ft_redirect_echo_3(tmp, env, str);
 	else if ((ft_strncmp(tmp[2], ">>", 10) == 0) && tmp[2])
-		ft_redirection_exec(tmp, env, str);
+		ft_redirect_exec(tmp, env, str);
 	else if ((ft_strncmp(tmp[1], ">>", 10) == 0) && tmp[2])
-		ft_redirection_exec(tmp, env, str);
+		ft_redirect_exec(tmp, env, str);
 }
